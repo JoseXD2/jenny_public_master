@@ -82,7 +82,12 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if MODS_ALLOWED
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#if android FlxG.android.justReleased.BACK #end
+		#end
+			
+		#if desktop 
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 		if (FileSystem.exists("modsList.txt")){
 			
@@ -116,7 +121,7 @@ class TitleState extends MusicBeatState
 		titleJSON = Json.parse(Assets.getText(path)); 
 		#end
 		
-		#if (polymod && !html5)
+		#if desktop 
 		if (sys.FileSystem.exists('mods/')) {
 			var folders:Array<String> = [];
 			for (file in sys.FileSystem.readDirectory('mods/')) {
